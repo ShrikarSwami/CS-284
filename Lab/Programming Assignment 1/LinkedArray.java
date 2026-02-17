@@ -21,50 +21,164 @@ public class LinkedArray {
     public ArrayNode tail;
 
     public LinkedArray() {
-        throw new UnsupportedOperationException("Constructor Not Implemented");
-        // Delete the above line, and write your implementation here.
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
+
+
     public String get(int idx) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
+        if (idx < 0 || idx >= size) {
+            throw new RuntimeException("Index out of bounds");
+        }
+
+        ArrayNode cur = head;
+        int count = 0;
+
+        while (cur != null) {
+
+            for (int i = 0; i < cur.array.length; i++) {
+
+                if (count == idx) {
+                    return cur.array[i];
+                }
+
+                count++;
+            }
+
+            cur = cur.next;
+        }
+
+        return null;
     }
 
     public void set(int idx, String value) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
+        if (idx < 0 || idx >= size) {
+            throw new RuntimeException("Index out of bounds");
+        }
+
+        ArrayNode cur = head;
+        int count = 0;
+
+        while (cur != null) {
+
+            for (int i = 0; i < cur.array.length; i++) {
+
+                if (count == idx) {
+                    cur.array[i] = value;
+                    return;
+                }
+
+                count++;
+            }
+
+            cur = cur.next;
+        }
     }
 
     public void append(String value) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
+        if (size == 0) {
+
+            ArrayNode node = new ArrayNode(1);
+            node.array[0] = value;
+
+            head = node;
+            tail = node;
+
+            size++;
+            return;
+        }
+
+        for (int i = 0; i < tail.array.length; i++) {
+
+            if (tail.array[i] == null) {
+
+                tail.array[i] = value;
+                size++;
+                return;
+            }
+        }
+
+        ArrayNode newNode =
+                new ArrayNode(tail.array.length * 2);
+
+        newNode.array[0] = value;
+
+        tail.next = newNode;
+        tail = newNode;
+
+        size++;
     }
 
     public String pop() {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
+        if (size == 0) {
+            throw new RuntimeException("Empty list");
+        }
+
+        String removed = get(size - 1);
+        set(size - 1, null);
+
+        size--;
+
+        // If empty now
+        if (size == 0) {
+            head = null;
+            tail = null;
+        }
+
+        return removed;
     }
 
     public int size() {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
+        return size;
     }
 
     public void insert(int idx, String value) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
-        // This method is OPTIONAL and not for credit.
+        if (idx < 0 || idx > size) {
+            throw new RuntimeException("Index out of bounds");
+        }
+
+        append(null);
+
+        for (int i = size - 2; i >= idx; i--) {
+            set(i + 1, get(i));
+        }
+
+        set(idx, value);
     }
 
+
     public String remove(int idx) {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
-        // This method is OPTIONAL and not for credit.
+        if (idx < 0 || idx >= size) {
+            throw new RuntimeException("Index out of bounds");
+        }
+
+        String removed = get(idx);
+
+        for (int i = idx; i < size - 1; i++) {
+            set(i, get(i + 1));
+        }
+
+        pop();
+
+        return removed;
     }
 
     public String toString() {
-        throw new UnsupportedOperationException("Method Not Implemented");
-        // Delete the above line, and write your implementation here.
-        // This method is OPTIONAL and not for credit.
+        String s = "[";
+
+        for (int i = 0; i < size; i++) {
+
+            if (i > 0) {
+                s += ",";
+            }
+
+            s += get(i);
+        }
+
+        s += "]";
+
+        return s;
     }
 }
