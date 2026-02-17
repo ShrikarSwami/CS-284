@@ -158,7 +158,21 @@ public class LinkedArray {
 
     // This method is used to return the size of the linked list of arrays.
     public int size() {
-        return size;
+        int count = 0;
+        ArrayNode cur = head;
+
+        while (cur != null) {
+            for (int i = 0; i < cur.array.length; i++) {
+                if (cur.array[i] == null) {
+                    // Return here to end the method early once the first unused slot is found.
+                    return count;
+                }
+                count++;
+            }
+            cur = cur.next;
+        }
+
+        return count;
     }
 
     // This method is used to insert a value at a specific index in the linked list of arrays.
