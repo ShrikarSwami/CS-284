@@ -151,6 +151,17 @@ public class LinkedArray {
         if (size == 0) {
             head = null;
             tail = null;
+            return removed;
+        }
+
+        // If the tail node became empty, remove it.
+        if (tail != null && tail.array[0] == null && head != tail) {
+            ArrayNode prev = head;
+            while (prev.next != null && prev.next != tail) {
+                prev = prev.next;
+            }
+            prev.next = null;
+            tail = prev;
         }
 
         return removed;
