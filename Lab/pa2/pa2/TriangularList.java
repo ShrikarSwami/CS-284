@@ -96,10 +96,14 @@ public class TriangularList<E> {
     // Rebuilds rows with capacities 1, 2, 3, ... and a possibly partial last row.
     // This is a helper method I used because it realy helped me visualize the insert and remove operations when I could just draw out the flat list and then rebuild the triangular structure from it.
     private void rebuildFromFlat(List<E> flat) {
+        // Clear the existing structure and rebuild it based on the flat list.
         metaList = new ArrayList<>();
 
+        // We keep adding rows until we've added all elements from the flat list.
         int rowSize = 1;
         int i = 0;
+        // For each row, we determine how many elements to take from the flat list
+        //(which is the minimum of the current row size and the remaining elements in the flat list) and add that as a new row in the metaList.
         while (i < flat.size()) {
             int take = Math.min(rowSize, flat.size() - i);
             List<E> row = new ArrayList<>(take);
